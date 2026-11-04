@@ -1,0 +1,1 @@
+regsvr32 "C:\sinteccamaleon\Files To Send\InterfaceEpsonNF.dll"

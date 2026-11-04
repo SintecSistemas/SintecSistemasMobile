@@ -1,0 +1,376 @@
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:        #0d2d5e;
+  --blue-mid:    #2563eb;
+  --blue-light:  #eff6ff;
+  --blue-border: #bfdbfe;
+  --teal:        #0f6e56;
+  --gray-50:     #f8fafc;
+  --gray-100:    #f1f5f9;
+  --gray-200:    #e2e8f0;
+  --gray-400:    #94a3b8;
+  --gray-600:    #475569;
+  --gray-800:    #1e293b;
+  --white:       #ffffff;
+  --red:         #dc2626;
+  --red-light:   #fff1f2;
+  --amber:       #d97706;
+  --amber-light: #fffbeb;
+  --green:       #16a34a;
+  --green-light: #f0fdf4;
+  --font: 'Segoe UI', system-ui, sans-serif;
+}
+
+html,body{background:#fff;font-family:var(--font);font-size:12px;color:var(--gray-800);margin:0;padding:0}
+
+/* WRAPPER GERAL */
+.painel-wrapper{display:flex;flex-direction:column;border:2px solid var(--blue-border);border-radius:8px;overflow:hidden;background:#fff}
+
+/* GRID 4 COLUNAS */
+.painel{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;background:var(--gray-50);border-bottom:1px solid var(--gray-200);width:100%}
+.col{padding:12px 16px;border-right:1px solid var(--gray-200);min-width:0}
+.col:last-child{border-right:none}
+
+/* TITULO DA COLUNA */
+.col-title{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;gap:5px}
+
+/* COLUNA 1: ITENS */
+.itens-table{width:100%;border-collapse:collapse}
+.itens-table tr{border-bottom:1px solid var(--gray-100)}
+.itens-table tr:last-child{border-bottom:none}
+.itens-table td{padding:4px 0;font-size:12px;color:var(--gray-800);vertical-align:top}
+.itens-table td.qty{width:30px;color:var(--gray-400);font-weight:600;white-space:nowrap}
+.itens-table td.nome{flex:1}
+.itens-table td.val{text-align:right;white-space:nowrap;font-weight:600;color:var(--gray-600);padding-left:8px}
+.itens-table tbody tr{cursor:pointer;transition:background .1s}
+.itens-table tbody tr:hover td{background:var(--blue-light)}
+.itens-footer{display:flex;justify-content:space-between;padding:7px 0 0;margin-top:5px;border-top:1px solid var(--gray-200);font-size:12px}
+.itens-footer .label{color:var(--gray-400);font-weight:600}
+.itens-footer .qtd{font-weight:800;color:var(--navy);font-size:13px}
+.itens-footer .total-val{font-weight:800;color:var(--navy);font-size:13px}
+
+/* COLUNA 2: ENDERECO */
+.end-row{display:flex;flex-direction:column;padding:4px 6px;margin:0 -6px 2px;border-radius:4px;cursor:pointer;transition:background .1s}
+.end-row:hover{background:var(--blue-light)}
+.end-row .lbl{font-size:10px;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:.4px;line-height:1.2}
+.end-row .val{font-size:12px;color:var(--gray-800);line-height:1.4;margin-top:1px}
+.cep-badge{display:inline-block;background:var(--blue-light);color:var(--blue-mid);border:1px solid var(--blue-border);border-radius:20px;padding:1px 8px;font-size:11px;font-weight:700;margin-top:2px;cursor:pointer}
+
+/* COLUNA 3: INFO ADICIONAL */
+.info-row{display:flex;align-items:baseline;gap:4px;padding:5px 6px;margin:0 -6px;border-radius:4px;cursor:pointer;transition:background .1s;border-bottom:1px solid var(--gray-100)}
+.info-row:last-child{border-bottom:none}
+.info-row:hover{background:var(--blue-light)}
+.info-row .lbl{font-size:11px;color:var(--gray-400);font-weight:600;white-space:nowrap;min-width:110px}
+.info-row .val{font-size:12px;color:var(--gray-800);font-weight:500}
+.info-row .val.pix{color:var(--teal);font-weight:700}
+.info-row .val.destaque{color:var(--blue-mid);font-weight:600}
+
+/* PLATAFORMA + CHIPS */
+.plat-block{display:flex;align-items:center;gap:8px;padding:6px 6px 8px;margin:0 -6px;border-bottom:1px solid var(--gray-200);margin-bottom:4px}
+.plat-logo{width:28px;height:28px;border-radius:6px;object-fit:contain;border:1px solid var(--gray-200);background:#fff;padding:2px;flex-shrink:0}
+.plat-info{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+.plat-nome{font-size:12px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plat-num{font-size:11px;color:var(--gray-400)}
+.chips-row{display:flex;flex-direction:column;gap:4px;padding:6px 6px 4px;margin:0 -6px;border-bottom:1px solid var(--gray-100);margin-bottom:2px}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:600;width:100%}
+.chip svg{flex-shrink:0}
+.chip.previsao{background:var(--blue-light);color:var(--blue-mid);border:1px solid var(--blue-border)}
+.chip.ok     {background:var(--green-light);color:var(--green);border:1px solid #86efac}
+.chip.alerta {background:var(--amber-light);color:var(--amber);border:1px solid #fde68a}
+.chip.atraso {background:var(--red-light);color:var(--red);border:1px solid #fca5a5}
+
+/* COLUNA 4: HISTORICO VERTICAL (mantido) */
+.hist-list{list-style:none}
+.hist-item{display:flex;gap:8px;padding:5px 6px;margin:0 -6px;border-radius:4px;cursor:pointer;transition:background .1s;border-bottom:1px solid var(--gray-100);align-items:flex-start}
+.hist-item:last-child{border-bottom:none}
+.hist-item:hover{background:var(--blue-light)}
+.hist-dot-wrap{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.hist-dot{width:8px;height:8px;border-radius:50%;background:var(--gray-400);flex-shrink:0}
+.hist-dot.ativo{background:var(--navy)}
+.hist-dot.atual{background:var(--blue-mid);box-shadow:0 0 0 3px var(--blue-light)}
+.hist-line{width:1px;flex:1;min-height:12px;background:var(--gray-200);margin-top:3px}
+.hist-content{flex:1;min-width:0}
+.hist-hora{font-size:11px;color:var(--gray-400);font-weight:700;white-space:nowrap}
+.hist-desc{font-size:12px;color:var(--gray-800);font-weight:500;margin-top:1px}
+.hist-prev{font-size:11px;color:var(--blue-mid);margin-top:2px;text-decoration:underline;cursor:pointer}
+
+/* &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
+   RODAPE - LINHA DO TEMPO HORIZONTAL DE STATUS
+   Status disponiveis da tabela pedido_venda_situacao
+   Situacao atual do pedido da tabela prevenda
+&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; */
+.timeline-footer{
+  background:#fff;
+  border-top:2px solid var(--blue-border);
+  padding:14px 20px 16px;
+  overflow-x:auto;
+}
+.timeline-title{
+  font-size:10px;font-weight:700;color:var(--gray-400);
+  text-transform:uppercase;letter-spacing:.6px;
+  margin-bottom:12px;display:flex;align-items:center;gap:6px;
+}
+.timeline-title svg{flex-shrink:0}
+
+/* trilho + nos */
+.timeline-track{
+  display:flex;align-items:flex-start;
+  position:relative;min-width:max-content;
+  padding-bottom:4px;
+}
+
+/* linha horizontal conectando os nos */
+.timeline-track::before{
+  content:'';position:absolute;
+  top:12px;left:12px;right:12px;height:2px;
+  background:var(--gray-200);z-index:0;
+}
+
+/* cada no de status */
+.tl-node{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;z-index:1;
+  min-width:80px;max-width:110px;
+  cursor:pointer;padding:0 6px;
+  transition:transform .15s;
+}
+.tl-node:hover{transform:translateY(-2px)}
+.tl-node:first-child{padding-left:0}
+.tl-node:last-child{padding-right:0}
+
+/* bolinha do no */
+.tl-dot{
+  width:24px;height:24px;border-radius:50%;
+  border:2px solid var(--gray-200);
+  background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;flex-shrink:0;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.tl-dot svg{width:11px;height:11px;opacity:.5}
+
+/* estado: ja passou */
+.tl-node.done .tl-dot{
+  border-color:transparent;
+  background:var(--gray-400);
+}
+.tl-node.done .tl-dot svg{opacity:1;color:#fff}
+.tl-node.done .tl-line-left,
+.tl-node.done .tl-line-right{background:var(--gray-400)}
+
+/* estado: atual */
+.tl-node.atual .tl-dot{
+  border-width:3px;
+  box-shadow:0 0 0 4px rgba(37,99,235,.15);
+  /* cor da bolinha vem do atributo style - corsituacao do banco */
+}
+.tl-node.atual .tl-label{font-weight:700;color:var(--navy)}
+.tl-node.atual .tl-hora{font-weight:700}
+
+/* estado: futuro */
+.tl-node.futuro .tl-dot{border-color:var(--gray-200);background:var(--gray-50)}
+.tl-node.futuro .tl-dot svg{color:var(--gray-300)}
+.tl-node.futuro .tl-label{color:var(--gray-400)}
+
+/* textos abaixo da bolinha */
+.tl-label{
+  font-size:10.5px;color:var(--gray-700);font-weight:600;
+  text-align:center;margin-top:6px;line-height:1.3;
+  word-break:break-word;
+}
+.tl-hora{
+  font-size:10px;color:var(--gray-400);font-weight:500;
+  text-align:center;margin-top:2px;
+}
+
+/* linha entre nos (segmento colorido quando done) */
+.tl-seg{
+  flex:1;height:2px;align-self:flex-start;margin-top:11px;
+  background:var(--gray-200);min-width:20px;z-index:0;
+  transition:background .3s;
+}
+.tl-seg.done{background:var(--gray-400)}
+</style>
+
+<div class="painel-wrapper" id="painelWrapper">
+
+  <!-- GRID 4 COLUNAS -->
+  <div class="painel" id="painelDetalhe">
+
+    <!-- COLUNA 1: ITENS DO PEDIDO -->
+    <div class="col" id="col-itens">
+      <div class="col-title">
+        &#x1F4E6;
+        Itens do Pedido ({{TOTAL_ITENS}})
+      </div>
+      <table class="itens-table">
+        <tbody id="tbodyItens">
+          {{ITENS_HTML}}
+        </tbody>
+      </table>
+      <div class="itens-footer">
+        <span class="label">Total de Itens</span>
+        <span class="qtd">{{TOTAL_ITENS}}</span>
+        <span class="total-val">{{VALOR_TOTAL}}</span>
+      </div>
+    </div>
+
+    <!-- COLUNA 2: ENDERECO DE ENTREGA -->
+    <div class="col" id="col-endereco">
+      <div class="col-title">
+        &#x1F4CD;
+        Endere&#231;o de Entrega
+      </div>
+      <div class="end-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryEditarEndereco|{{END_LOGRADOURO}}, {{END_NUMERO}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryEditarEndereco|{{END_LOGRADOURO}}, {{END_NUMERO}}')">
+        <span class="val">{{END_LOGRADOURO}}, {{END_NUMERO}}</span>
+      </div>
+      <div class="end-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryEditarEndereco|{{END_COMPLEMENTO}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryEditarEndereco|{{END_COMPLEMENTO}}')">
+        <span class="val">{{END_COMPLEMENTO}}</span>
+      </div>
+      <div class="end-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryEditarEndereco|{{END_BAIRRO}} - {{END_CIDADE}} / {{END_UF}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryEditarEndereco|{{END_BAIRRO}} - {{END_CIDADE}} / {{END_UF}}')">
+        <span class="val">{{END_BAIRRO}} - {{END_CIDADE}} / {{END_UF}}</span>
+      </div>
+      <div class="end-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryBuscarCEP|{{END_CEP}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryBuscarCEP|{{END_CEP}}')">
+        <span class="lbl">CEP</span>
+        <span class="cep-badge">{{END_CEP}}</span>
+      </div>
+      <div class="end-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryEditarReferencia|{{END_REFERENCIA}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryEditarReferencia|{{END_REFERENCIA}}')">
+        <span class="lbl">Refer&#234;ncia</span>
+        <span class="val">{{END_REFERENCIA}}</span>
+      </div>
+    </div>
+
+    <!-- COLUNA 3: INFORMACOES ADICIONAIS + plataforma + previsao + atraso -->
+    <div class="col" id="col-info">
+      <div class="col-title">
+        &#x2139;&#xFE0F;
+        Informa&#231;&#245;es Adicionais
+      </div>
+      <div class="plat-block">
+        <img class="plat-logo" src="{{IMG_PLATAFORMA_PATH}}" alt="Plataforma" onerror="this.style.display='none'"/>
+        <div class="plat-info">
+          <div class="plat-nome">{{PLATAFORMA_NOME}}</div>
+          <div class="plat-num">Pedido #{{NUMPREVENDA}}</div>
+        </div>
+      </div>
+      <div class="chips-row">
+        <div class="chip previsao">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Previs&#227;o: {{PREVISAO_ENTREGA}}
+        </div>
+        <div class="chip {{CLASSE_ATRASO}}">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          {{TEXTO_ATRASO}}
+        </div>
+      </div>
+      <div class="info-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryAlterarPagamento|{{FORMA_PAGAMENTO}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryAlterarPagamento|{{FORMA_PAGAMENTO}}')">
+        <span class="lbl">Forma de Pagamento:</span>
+        <span class="val pix">{{FORMA_PAGAMENTO}}</span>
+      </div>
+      <div class="info-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryAlterarTipoEntrega|{{TIPO_ENTREGA}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryAlterarTipoEntrega|{{TIPO_ENTREGA}}')">
+        <span class="lbl">Tipo de Entrega:</span>
+        <span class="val destaque">{{TIPO_ENTREGA}}</span>
+      </div>
+      <div class="info-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryAlterarTempoEstimado|{{TEMPO_ESTIMADO}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryAlterarTempoEstimado|{{TEMPO_ESTIMADO}}')">
+        <span class="lbl">Tempo Estimado:</span>
+        <span class="val">{{TEMPO_ESTIMADO}} min</span>
+      </div>
+      <div class="info-row" tabindex="0"
+           onclick="kal('fn_PedidoDeliveryEditarObservacao|{{OBSERVACAO}}')"
+           onkeydown="kalKey(event,'fn_PedidoDeliveryEditarObservacao|{{OBSERVACAO}}')">
+        <span class="lbl">Observa&#231;&#227;o:</span>
+        <span class="val">{{OBSERVACAO}}</span>
+      </div>
+    </div>
+
+    <!-- COLUNA 4: HISTORICO VERTICAL -->
+    <div class="col" id="col-historico">
+      <div class="col-title">
+        &#x1F550;
+        Hist&#243;rico
+      </div>
+      <ul class="hist-list" id="listaHistorico">
+        {{HISTORICO_HTML}}
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
+       RODAPE - LINHA DO TEMPO HORIZONTAL DE STATUS
+       Gerado por: fn_PedidoDeliveryMontarStatusHTML
+       Marcador:   {{STATUS_TIMELINE_HTML}}
+  &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
+  <div class="timeline-footer" id="timelineFooter">
+    <div class="timeline-title">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Andamento do Pedido
+    </div>
+    <div class="timeline-track" id="timelineTrack">
+      {{STATUS_TIMELINE_HTML}}
+    </div>
+    <!--
+    MODELO DE UM NO DA TIMELINE (gerado por fn_PedidoDeliveryMontarStatusHTML):
+
+    Segmento entre nos (exceto antes do primeiro):
+    <div class="tl-seg {{SEG_CLASSE}}"></div>
+
+    No de status:
+    <div class="tl-node {{NODE_CLASSE}}" tabindex="0"
+         onclick="kal('fn_PedidoDeliveryAlterarSituacao|{{IDSITUACAO}}|{{SITUACAO_COD}}|{{DESCR_SITUACAO}}|{{CORSITUACAO}}')"
+         onkeydown="kalKey(event,'fn_PedidoDeliveryAlterarSituacao|{{IDSITUACAO}}|{{SITUACAO_COD}}|{{DESCR_SITUACAO}}|{{CORSITUACAO}}')">
+      <div class="tl-dot" style="{{STYLE_DOT}}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="tl-label">{{DESCR_SITUACAO}}</div>
+      <div class="tl-hora">{{HORA_SITUACAO}}</div>
+    </div>
+
+    Onde:
+      {{NODE_CLASSE}}   = "done" | "atual" | "futuro"
+      {{SEG_CLASSE}}    = "done" | ""
+      {{STYLE_DOT}}     = "background:#corsituacao;border-color:#corsituacao" (para done/atual)
+                          ou "" (para futuro)
+      {{IDSITUACAO}}    = id numerico da situacao
+      {{SITUACAO_COD}}  = codigo char da situacao (ex: P, A, E, F)
+      {{DESCR_SITUACAO}}= descricao da situacao (ex: Pendente, Em preparo)
+      {{CORSITUACAO}}   = cor hex da situacao (ex: #f97316)
+      {{HORA_SITUACAO}} = horario registrado no historico ou "" se ainda nao passou
+    -->
+  </div>
+
+</div>
+
+<script>
+function kal(hash){location.hash=hash;}
+function kalKey(e,hash){if(e.keyCode===13||e.keyCode===32){e.preventDefault();kal(hash);}}
+</script>

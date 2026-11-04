@@ -1,0 +1,16 @@
+near "=": syntax error
+1:1
+select TVAR(0) idusersystem from usuarios_sistema where flaginativo='F' and upper(trim(=administrador)) and upper(trim(senha=judiciario))
+
+no such savepoint: Default
+1:1
+Release Savepoint "Default"
+
+no such savepoint: Default
+1:1
+Release Savepoint "Default"
+
+no such savepoint: Default
+1:1
+Release Savepoint "Default"
+
